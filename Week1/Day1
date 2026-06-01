@@ -1,0 +1,61 @@
+Two Sum (c++)
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> numMap;
+        int n=nums.size();
+        // building the hash map
+      //  for(int i=0;i<n;i++){
+     //       numMap[nums[i]]=i;
+      //  }
+        for(int i=0;i<n;i++){
+            int complement= target-nums[i];
+            if(numMap.count(complement)&&numMap[complement]!=i){
+                return {i,numMap[complement]};
+            }
+             numMap[nums[i]]=i;
+        }
+        return {};
+        
+    }
+};
+
+
+Remove Duplicates From Sorted Array
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int j=0;
+        for(int i=0;i<nums.size();i++){// remember the first element will always be the same.
+            if(nums[i]!=nums[j]){// if they atre not equall add to array(remember we are modifying the same array)
+                j++;
+                nums[j]=nums[i];
+
+            }
+        }
+        return j+1;
+    }
+};
+
+Stock Buy And Sell
+
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int buy= prices[0];
+        int profit= 0;
+        int n= prices.size();
+        for(int i=1;i<n;i++){
+            if(prices[i]<buy){
+                buy=prices[i];
+            }
+            else if((prices[i]-buy)>profit){
+                profit = prices[i]-buy;
+            }
+        }
+        return profit;
+    }
+};

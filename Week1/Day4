@@ -1,0 +1,81 @@
+1) Matrix Diagonal Sum(Java Code)
+
+
+class Solution {
+    public int diagonalSum(int[][] mat) {
+        int n=mat.length;
+        int sum=0;
+        for(int i=0;i<n;i++){
+            sum+=mat[i][i];
+        }
+        int i=0,j=n-1;
+        while(i<n &&j>=0){
+            sum+=mat[i][j];
+            i++;
+            j--;
+        }
+        if(n%2!=0){
+            sum-=mat[n/2][n/2];
+        }
+        return sum;
+    }
+}
+
+
+2)  Reshape the Matrix(Java Code)
+
+class Solution {
+    public int[][] matrixReshape(int[][] mat, int r, int c) {
+        int n=mat.length;
+        int m=mat[0].length;
+        int[][] newMat=new int[r][c];
+        if(r*c!=n*m){
+            return mat;
+        }
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                newMat[cnt/c][cnt%c]=mat[i][j];
+                cnt++;
+            }
+        }
+        return newMat;
+    }
+}
+
+
+3)  Spiral Matrix(Java Code)
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res= new ArrayList<>();
+        int srow=0,erow=matrix.length-1,scol=0,ecol=matrix[0].length-1;
+        while(srow<=erow && scol<=ecol){
+            for(int j=scol;j<=ecol;j++){
+                res.add(matrix[srow][j]);
+
+            }
+            for(int i=srow+1;i<=erow;i++){
+                res.add(matrix[i][ecol]);
+            }
+            for(int j=ecol-1;j>=scol;j--){
+                if(srow==erow){// in case there is only one row
+                    break;
+                }
+                res.add(matrix[erow][j]);
+            }
+            for(int i=erow-1;i>srow;i--){
+                if(scol==ecol){// in case there is only one column
+                    break;
+                }
+                res.add(matrix[i][scol]);
+            }
+            srow++;
+            erow--;
+            scol++;
+            ecol--;
+        }
+        return res;
+        
+    }
+}

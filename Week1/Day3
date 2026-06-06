@@ -1,0 +1,67 @@
+// 1) Move Zeros (C++ Code)
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums){
+        int j=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]!=0){
+                nums[j++]=nums[i];
+            }
+        }
+        while(j<nums.size()){
+            nums[j++]=0;
+        }
+    }
+};
+
+//  2) Squares of a Sorted Array (Java Code)
+
+
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int n=nums.length;
+        int[] arr=new int[n];
+        int left=0;
+        int right=n-1;
+        int pos=n-1;
+        while(left<=right){
+            int leftSquare=nums[left]*nums[left];
+            int rightSquare=nums[right]*nums[right];
+            if(leftSquare>rightSquare){
+                arr[pos--]=leftSquare;
+                left++;
+            }
+            else{
+                arr[pos--]=rightSquare;
+                right--;
+            }
+        }
+        return arr;
+    }
+}
+
+
+//  3)  Container With Most Water(Java Code)
+
+
+class Solution {
+    public int maxArea(int[] height) {
+        int n= height.length;
+        int i=0,j=n-1;
+        int totalWater=0;
+        while(i<j){
+            int w=j-i;
+            int h=Math.min(height[i],height[j]);
+            int area=w*h;
+            totalWater=Math.max(totalWater,area);
+            if(height[i]<height[j]){
+                i++;
+            }
+            else{
+                j--;
+            }
+        }
+        return totalWater;
+    }
+}

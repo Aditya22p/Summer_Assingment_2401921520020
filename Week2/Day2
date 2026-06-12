@@ -1,0 +1,82 @@
+1)  Longest Substring Without Repeating Characters(Java Code)
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n=s.length();
+        int[] hash=new int[256];
+        Arrays.fill(hash, -1);
+        int r=0,l=0,maxLen=0;
+        while(r<n){
+            if(hash[s.charAt(r)]>=l){
+                l=Math.max(hash[s.charAt(r)]+1,l);
+            }
+            int len=r-l+1;
+            maxLen=Math.max(maxLen,len);
+            hash[s.charAt(r)]=r;
+            r++;
+        }
+        return maxLen;
+    }
+}
+
+2)  Permutation in String(Java Code)
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        int n=s1.length();
+        int m=s2.length();
+        if(n>m) return false;
+        int[] s1Freq = new int[26];
+        int[] s2Freq=new int[26];
+        int l=0,r=0;
+        for(int i=0;i<n;i++){
+            char ch=s1.charAt(i);
+            s1Freq[ch-'a']++;
+        }
+        while(r<m){
+            s2Freq[s2.charAt(r)-'a']++;
+            if((r-l+1)>n){
+                //time to shrink the window
+                s2Freq[s2.charAt(l)-'a']--;
+                l++;
+            }
+            if (Arrays.equals(s1Freq, s2Freq)) {
+                return true;
+            }
+            r++;
+        }
+        return false;
+    }
+}
+
+
+3)  Find All Anagrams in a String(Java Code)
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer>ans=new ArrayList<>();
+        int n=p.length();
+        int m=s.length();
+        if(n>m) return ans;
+        int[] s1Freq = new int[26];
+        int[] s2Freq=new int[26];
+        int l=0,r=0;
+        for(int i=0;i<n;i++){
+            char ch=p.charAt(i);
+            s1Freq[ch-'a']++;
+        }
+        while(r<m){
+            s2Freq[s.charAt(r)-'a']++;
+            if((r-l+1)>n){
+                //time to shrink the window
+                s2Freq[s.charAt(l)-'a']--;
+                l++;
+            }
+            if (Arrays.equals(s1Freq, s2Freq)) {
+                ans.add(l);
+            }
+            r++;
+        }
+        return ans;
+    }
+}

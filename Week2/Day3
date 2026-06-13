@@ -1,0 +1,65 @@
+1) Implement strStr()(Java Code)
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        for(int i = 0, j = needle.length(); j<=haystack.length(); i++,j++){
+            if(haystack.substring(i,j).equals(needle)){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+2)  Is Subsequence(Java Code)
+
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int n=s.length();
+        int m=t.length();
+        int i=0,j=0;
+        while(i<n && j<m){
+            if(s.charAt(i)==t.charAt(j)){
+                i++;
+            }
+            j++;
+        }
+        if(i==n){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
+
+3)  Repeated Substring Pattern(Java Code)
+
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        int n= s.length();
+        for(int l=n/2;l>0;l--){
+            if(n%l==0){
+                String pattern=s.substring(0,l);
+                String str="";
+                int time=n/l;
+                while(time>0){
+                    str+=pattern;
+                    time--;
+                }
+                if(str.equals(s)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+//More optimal solution for question number 3
+
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        return (s + s).substring(1, 2 * s.length() - 1).contains(s);
+    }
+}

@@ -1,0 +1,83 @@
+1) Reverse Words in a String III(Java Code)
+
+class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split(" ");
+
+        StringBuilder ans = new StringBuilder();
+
+        for (int i = 0; i < words.length; i++) {
+
+            ans.append(new StringBuilder(words[i]).reverse());
+
+            if (i != words.length - 1) {
+                ans.append(" ");
+            }
+        }
+
+        return ans.toString();
+    }
+}
+
+2)  Decode String(Java Code)
+
+class Solution {
+    public String decodeString(String s) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> stringStack = new Stack<>();
+
+        StringBuilder curr = new StringBuilder();
+        int num = 0;
+
+        for (char ch : s.toCharArray()) {
+
+            if (Character.isDigit(ch)) {
+                num = num * 10 + (ch - '0');
+            }
+
+            else if (ch == '[') {
+                countStack.push(num);
+                stringStack.push(curr);
+
+                num = 0;
+                curr = new StringBuilder();
+            }
+
+            else if (ch == ']') {
+
+                int repeat = countStack.pop();
+                StringBuilder prev = stringStack.pop();
+
+                for (int i = 0; i < repeat; i++) {
+                    prev.append(curr);
+                }
+
+                curr = prev;
+            }
+
+            else {
+                curr.append(ch);
+            }
+        }
+
+        return curr.toString();
+    }
+}
+
+3) Generate Parentheses
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+       List<String>ans=new ArrayList<>();
+       function("",0,0,n,ans);
+       return ans; 
+    }
+    public void function(String curr, int open ,int close, int n, List<String>res){
+        if(curr.length()==2*n){
+            res.add(curr);
+            return;
+        }
+        if(open<n) function(curr+'(',open+1,close,n,res);
+        if(close<open) function(curr+')',open,close+1,n,res);
+    }
+}

@@ -1,0 +1,79 @@
+1)  Group Anagrams
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+         Map<String, List<String>> map = new HashMap<>();
+
+        for (String str : strs) {
+
+            char[] arr = str.toCharArray();
+            Arrays.sort(arr);
+
+            String key = new String(arr);
+
+            map.putIfAbsent(key, new ArrayList<>());
+            map.get(key).add(str);
+        }
+
+        return new ArrayList<>(map.values());
+    }
+}
+
+2)  String Compression
+
+class Solution {
+    public int compress(char[] chars) {
+        int n= chars.length;
+        int index=0;
+        int i=0;
+        while(i<n){
+            char curr=chars[i];
+            int cnt=0;
+            //counting the duplicates
+            while(i<n && chars[i]==curr){
+                cnt++;
+                i++;
+            }
+            //assigning
+            chars[index++]=curr;
+            if(cnt>1){
+                String cntStr = String.valueOf(cnt);
+                for(char ch : cntStr.toCharArray()){
+                    chars[index++]=ch;
+                }
+            }
+        }
+        return index;
+    }
+}
+
+3)  Longest Palindromic Substring
+
+class Solution {
+    public String longestPalindrome(String s) {
+        int n= s.length(), max=0,start=0,end=0;
+        for(int i=0;i<n;i++){
+            for(int j=i;j<n;j++){
+                if(isPalindrome(s,i,j)){
+                    if((j-i+1)>max){
+                        max= j-i+1;
+                        start=i;
+                        end=j;
+                    }
+                }
+            }
+           
+        }
+         return s.substring(start,end+1);
+        
+    }
+    boolean isPalindrome(String s, int i,int j){
+        while(i<=j){
+            if(s.charAt(i)!=s.charAt(j)) return false;
+            i++;
+            j--;
+
+        }
+        return true;
+    }
+}

@@ -1,0 +1,86 @@
+* Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+
+1) Merge Two Sorted Lists
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1==null){
+            return list2;
+        }
+        if(list2==null){
+            return list1;
+        }
+        if(list1.val<list2.val){
+           list1.next= mergeTwoLists(list1.next,list2);
+            return list1;
+        }
+        else{
+            list2.next=mergeTwoLists(list1,list2.next);
+            return list2;
+        }
+    }
+}
+
+2) Remove Nth Node From End of List
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy= new ListNode(0,head);// for edge case
+        ListNode slow=dummy;
+        ListNode fast=dummy;
+        for(int i=0;i<=n;i++){
+            fast=fast.next;
+        }
+        while(fast!=null){
+            slow=slow.next;
+            fast=fast.next;
+        }
+        // now slow will be just one step behind the element to be deleted
+        slow.next=slow.next.next;
+        return dummy.next;// bcz head starts from the next of dummy
+    }
+}
+
+3) Palindrome Linked List
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow= head;
+        ListNode fast= head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        ListNode newHead= reverseList(slow.next);
+        ListNode first= head;
+        ListNode second= newHead;
+        while(second!=null){
+            if(first.val!=second.val){
+                reverseList(newHead); //re reversing the 2nd half to original ll
+                return false;
+            }
+            first=first.next;
+            second=second.next;
+        }
+        reverseList(newHead);// in case ans is true than rereversing to original ll
+        return true;
+    }
+    public ListNode reverseList(ListNode newHead){
+        ListNode prev=null;
+        ListNode curr=newHead;
+        while(curr!=null){
+            ListNode next= curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+}

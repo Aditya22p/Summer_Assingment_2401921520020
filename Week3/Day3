@@ -1,0 +1,119 @@
+1) Valid Parentheses
+
+class Solution {
+    public boolean isValid(String s) {
+        Stack<String> st= new Stack<>();
+        for(char ch:s.toCharArray()){
+            if(ch=='(' || ch=='{' || cha=='['){
+                st.push(ch);
+            }
+            else{
+                if(st.isEmpty()) return false;
+                char top= st.pop();
+                //check for matching pair
+                if((ch==')' && top=='(') || (ch=='}' && top=='{') ||(ch==']' && top=='['))
+                   continue;
+                else
+                  return false;
+            }
+        }
+        return st.isEmpty();// True if all brackets matched
+    }
+}
+
+2)  Min Stack
+
+class MinStack {
+    private Stack<Long> st;
+    private long mini;
+
+    // Empty Constructor
+    public MinStack() {
+        st = new Stack<>();
+    }
+
+    // Method to push a value in stack
+    public void push(int value) {
+        long val=value;
+        // If stack is empty
+        if (st.isEmpty()) {
+            // Update the minimum value
+            mini = val;
+
+            // Push current value as minimum
+            st.push(val);
+            return;
+        }
+
+        // If the value is greater than the minimum
+        if (val >=mini) {
+            st.push(val);
+        } else {
+            // Add the modified value to stack
+            st.push(2 * val - mini);
+            // Update the minimum
+            mini = val;
+        }
+    }
+
+    // Method to pop a value from stack
+    public void pop() {
+        // Base case
+        if (st.isEmpty()) return;
+
+        // Get the top
+        long x = st.pop();
+
+        // If the modified value was added to stack
+        if (x < mini) {
+            // Update the minimum
+            mini = 2 * mini - x;
+        }
+    }
+
+    // Method to get the top of stack
+    public int top() {
+        // Base case
+        if (st.isEmpty()) return -1;
+
+        // Get the top
+        long x = st.peek();
+
+        // Return top if minimum is less than the top
+        if (mini < x) return (int)x;
+
+        // Otherwise return mini
+        return (int)mini;
+    }
+
+    // Method to get the minimum in stack
+    public int getMin() {
+        // Return the minimum
+        return (int)mini;
+    }
+}
+
+3)  Next Greater Element I
+
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int[]ans=new int[nums1.length];
+        for(int i=0;i<nums1.length;i++){
+            int j=0;
+            while(nums1[i]!=nums2[j]){
+                j++;
+            }
+            int k = j + 1;
+            while (k < nums2.length && nums2[k] <= nums1[i]) {
+                k++;
+            }
+
+            if (k < nums2.length) {
+                ans[i] = nums2[k];
+            } else {
+                ans[i] = -1;
+            }
+            
+        }
+        return ans;
+    }
